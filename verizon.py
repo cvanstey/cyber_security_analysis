@@ -220,57 +220,60 @@ plt.show()
 
 
 # ── Plot 5: Key Risk Metrics Dashboard ───────────────────────────────────────
-fig, ax = plt.subplots(figsize=(12, 6))
-ax.axis("off")
-
-# Separate pct metrics from USD
 pct_metrics = df_risk[df_risk["unit"] == "percent"].copy()
 usd_metrics = df_risk[df_risk["unit"] == "USD"].copy()
-
 pct_metrics["display"] = pct_metrics["value"].apply(lambda v: f"{v:.0%}")
 usd_metrics["display"] = usd_metrics["value"].apply(lambda v: f"${v:,.0f}")
 all_metrics = pd.concat([pct_metrics, usd_metrics], ignore_index=True)
 
-n      = len(all_metrics)
-cols   = 3
-rows   = (n + cols - 1) // cols
-card_w = 0.28
-card_h = 0.35
-gap_x  = 0.06
-gap_y  = 0.12
+cols      = 3
+rows      = (len(all_metrics) + cols - 1) // cols
+card_w    = 3.2    # inches
+card_h    = 1.8    # inches
+gap       = 0.25   # inches
+margin    = 0.4    # inches
+title_h   = 0.5    # inches reserved for title
+
+fig_w = cols * card_w + (cols - 1) * gap + 2 * margin
+fig_h = rows * card_h + (rows - 1) * gap + 2 * margin + title_h
+
+fig = plt.figure(figsize=(fig_w, fig_h))
+fig.patch.set_facecolor("white")
+ax = fig.add_axes([0, 0, 1, 1])
+ax.set_xlim(0, fig_w)
+ax.set_ylim(0, fig_h)
+ax.axis("off")
+
+fig.suptitle("Verizon DBIR 2025 — Key Risk Metrics at a Glance",
+             fontsize=13, fontweight="bold", y=0.97)
 
 card_colors = [VZ_RED, VZ_MID, VZ_DARK, VZ_RED, GOLD, VZ_MID]
 
 for idx, (_, row) in enumerate(all_metrics.iterrows()):
-    col_i  = idx % cols
-    row_i  = idx // cols
-    x_pos  = 0.05 + col_i * (card_w + gap_x)
-    y_pos  = 0.75 - row_i * (card_h + gap_y)
-    color  = card_colors[idx % len(card_colors)]
+    col_i = idx % cols
+    row_i = idx // cols
 
-    fancy = FancyBboxPatch(
-        (x_pos, y_pos), card_w, card_h,
-        boxstyle="round,pad=0.02",
+    x = margin + col_i * (card_w + gap)
+    y = fig_h - margin - title_h - (row_i + 1) * card_h - row_i * gap
+    color = card_colors[idx % len(card_colors)]
+
+    ax.add_patch(FancyBboxPatch(
+        (x, y), card_w, card_h,
+        boxstyle="round,pad=0.1",
         facecolor=color, edgecolor="white", linewidth=1.5,
-        transform=ax.transAxes, zorder=2
-    )
-    ax.add_patch(fancy)
-
-    ax.text(x_pos + card_w / 2, y_pos + card_h * 0.62,
+        transform=ax.transData, zorder=2
+    ))
+    ax.text(x + card_w / 2, y + card_h * 0.60,
             row["display"],
             ha="center", va="center",
             fontsize=26, fontweight="bold", color="white",
-            transform=ax.transAxes, zorder=3)
-    ax.text(x_pos + card_w / 2, y_pos + card_h * 0.22,
+            transform=ax.transData)
+    ax.text(x + card_w / 2, y + card_h * 0.22,
             row["metric"],
             ha="center", va="center",
-            fontsize=7.5, color="white", alpha=0.9,
-            transform=ax.transAxes, zorder=3,
-            wrap=True)
+            fontsize=8.5, color="white", alpha=0.92,
+            transform=ax.transData)
 
-ax.set_title("Verizon DBIR 2025 — Key Risk Metrics at a Glance",
-             fontsize=13, fontweight="bold", pad=20)
-plt.tight_layout()
 plt.savefig("dbir_plot5_risk_metrics.png", dpi=150, bbox_inches="tight")
 plt.show()
 
