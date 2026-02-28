@@ -27,7 +27,7 @@ Extensive AI adoption cuts breach cost by $1.90M (34.4%) and reduces detection a
 The US market declined 7.1% in 2024 while claims rose ~40%. Loss ratios are rising — several of the top 20 insurers are above 75%. Ransomware is in 44% of breaches but 64% of victims are now refusing to pay and average ransom payments dropped 77%. That's good for victims but it means attackers are pivoting to data extortion and business disruption instead, which is harder to price.
 
 ### The single most important implication
-The organisations most at risk are large, US-based, with complex supply chains, limited AI security tooling, and no AI governance policy. That profile describes a lot of financial services, healthcare, and technology companies — which is exactly why those three industries dominate the top of both the IBM cost rankings and the NAIC premium concentration data. The threat is not random. It's targeted, automated, and getting cheaper to execute while getting more expensive to recover from.
+The organizations most at risk are large, US-based, with complex supply chains, limited AI security tooling, and no AI governance policy. That profile describes a lot of financial services, healthcare, and technology companies — which is exactly why those three industries dominate the top of both the IBM cost rankings and the NAIC premium concentration data. The threat is not random. It's targeted, automated, and getting cheaper to execute while getting more expensive to recover from.
 
 ---
 
