@@ -346,3 +346,43 @@ for idx, m in enumerate(key_metrics):
 fig.text(0.02, 0.01, SOURCE, fontsize=7, color="#888888")
 plt.savefig("naic_plot6_threat_dashboard.png", dpi=150, bbox_inches="tight")
 plt.show()
+
+# ── Summary ───────────────────────────────────────────────────────────────────
+top_insurer  = df_insurers.sort_values("dwp", ascending=False).iloc[0]
+top_state    = df_states.sort_values("market_share", ascending=False).iloc[0]
+total_dwp    = df_insurers["dwp"].sum()
+top5_share   = df_insurers.sort_values("dwp", ascending=False).head(5)["market_share"].sum()
+
+yoy_latest   = df_yoy_total.sort_values("year").iloc[-1]
+yoy_dom_latest = df_yoy_domestic.sort_values("year").iloc[-1]
+
+avg_lr       = df_insurers["loss_ratio_with_dcc"].mean()
+unprofitable = (df_insurers["loss_ratio_with_dcc"] > 0.75).sum()
+
+print(f"""
+╔══════════════════════════════════════════════════════════════╗
+║    NAIC Cybersecurity Insurance 2025 — Key Findings          ║
+╠══════════════════════════════════════════════════════════════╣
+  Market size (top 20 DWP)   : ${total_dwp/1e9:.2f}B
+  Latest YoY change (total)  : {yoy_latest['value']*100:+.1f}% ({int(yoy_latest['year'])})
+  Latest YoY change (domestic): {yoy_dom_latest['value']*100:+.1f}%
+
+  Top insurer                : {top_insurer['group_name']}
+    → DWP                    : ${top_insurer['dwp']/1e6:.0f}M
+    → Market share           : {top_insurer['market_share']:.1%}
+    → Loss ratio             : {top_insurer['loss_ratio_with_dcc']:.1%}
+
+  Top 5 insurers share       : {top5_share:.1%} of market
+  Avg loss ratio (top 20)    : {avg_lr:.1%}
+  Insurers loss ratio >75%   : {unprofitable} of {len(df_insurers)}
+
+  Top state by DWP           : {top_state['state']}
+    → Market share           : {top_state['market_share']:.1%}
+    → DWP                    : ${top_state['dwp']/1e6:.0f}M
+
+  Ransomware in breaches     : 44%
+  Human element factor       : 60%
+  Vishing surge 2024         : +442%
+  Stolen credential rise     : +800% (H1 2025)
+╚══════════════════════════════════════════════════════════════╝
+""")
