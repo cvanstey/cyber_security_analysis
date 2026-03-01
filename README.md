@@ -3,7 +3,7 @@
 An analysis of the 2025 cyber threat landscape drawing on three major industry reports:
 **IBM Cost of a Data Breach**, **Verizon DBIR**, and the **NAIC Cybersecurity Insurance Market Report**.
 
-[![Open NAIC Analysis in Colab](https://colab.research.google.com/assets/colab-badge.svg)(https://colab.research.google.com/drive/1KpJd91sFwLt-PTrQCoxHZxyO1ZsPmq-X?usp=sharing)]
+[![Open Cybersecurity Analysis in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1KpJd91sFwLt-PTrQCoxHZxyO1ZsPmq-X?usp=sharing)
 
 ---
 
